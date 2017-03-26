@@ -619,12 +619,16 @@ def action(args):
     names = None if args.has_header else sequtils.BLAST_HEADER_DEFAULT
     header = 0 if args.has_header else None
     usecols = ['qseqid', 'sseqid', 'pident', 'qcovs']
+    dtypes = dict(qseqid=str, sseqid=str, pident=float, coverage=float)
+
     if args.best_n_hits:
         usecols.append('mismatch')
+        dtypes['mismatch'] = int
+
     log.info('loading blast results')
     blast_results = pd.read_csv(
         args.blast_file,
-        dtype=dict(qseqid=str, sseqid=str, pident=float, coverage=float),
+        dtype=dtypes,
         names=names,
         na_filter=True,  # False is faster
         header=header,
