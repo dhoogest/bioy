@@ -624,7 +624,8 @@ def action(args):
     if args.best_n_hits:
         usecols.append('mismatch')
         dtypes['mismatch'] = int
-
+    log.info(usecols)
+    log.info(dtypes)
     log.info('loading blast results')
     blast_results = pd.read_csv(
         args.blast_file,
